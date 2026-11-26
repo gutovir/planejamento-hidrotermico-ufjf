@@ -1,0 +1,7 @@
+streamlit>=1.67,<2
+numpy>=1.24
+pandas>=2.0
+plotly>=5.24,<7
+cvxopt>=1.3.2,<2
+pyscipopt>=6,<7
+PySDDP==0.0.90
