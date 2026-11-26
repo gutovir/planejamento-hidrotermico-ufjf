@@ -234,19 +234,6 @@ def mostrar_resultados(resultado,sistema,metodo,slug):
             st.plotly_chart(g.movimentacao(grupo,sistema),width='stretch')
         st.plotly_chart(g.volumes(df,sistema),width='stretch')
         st.plotly_chart(g.custo(df),width='stretch')
-        if 'CMO (R$/MWh)' in df:
-            import plotly.graph_objects as go
-            fig=go.Figure()
-            for nome,grupo in df.groupby('Cenário',sort=False):fig.add_scatter(x=grupo['Mês'],y=grupo['CMO (R$/MWh)'],name=nome,mode='lines+markers',line_color=g.CORES.get(nome,g.CORES['Custo']))
-            st.plotly_chart(g.base(fig,'Custo marginal de operação','R$/MWh'),width='stretch')
-            cols=[c for c in df if c.startswith('CMA ')]
-            if cols:
-                div,un=g.escala(df[cols].to_numpy());fig=go.Figure()
-                for nome,grupo in df.groupby('Cenário',sort=False):
-                    for i,u in enumerate(sistema['UHE']):
-                        col=f'CMA {u["Nome"]} (R$/hm³)'
-                        fig.add_scatter(x=grupo['Mês'],y=grupo[col]/div,name=u['Nome']+' — '+nome,line_color=g.CORES[u['Nome']],mode='lines+markers')
-                st.plotly_chart(g.base(fig,'Custo marginal da água',un+'/hm³'),width='stretch')
     if metodo=='PDE':
         with abas[1]:
             t=seletor('Estágio',range(len(meses)),format_func=lambda t:meses[t],key=slug+'_fcf')
